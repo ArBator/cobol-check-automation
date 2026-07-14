@@ -5,7 +5,7 @@
 LOWERCASE_USERNAME=$(echo "$ZOWE_USERNAME" | tr '[:upper:]' '[:lower:]')
 
 # ITT VAN A LÉNYEG 2: Itt olvassa ki a bash szkript az átadott adatokat
-ZOWE_PARAMS="--host $YOUR_HOST --port $YOUR_PORT --user $ZOWE_USERNAME --pass $ZOWE_PASSWORD --reject-unauthorized false"
+ZOWE_PARAMS="--host $ZOWE_HOST --port $ZOWE_PORT --user $ZOWE_USERNAME --pass $ZOWE_PASSWORD --reject-unauthorized false"
 
 # Check if directory exists, create if it doesn't
 if ! zowe zos-files list uss-files "/z/$LOWERCASE_USERNAME/cobolcheck" $ZOWE_PARAMS &>/dev/null; then
