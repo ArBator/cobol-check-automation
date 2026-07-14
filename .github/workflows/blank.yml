@@ -24,3 +24,4 @@ jobs:
           echo "Running COBOL Check"
           chmod +x .github/scripts/zowe_operations.sh
           .github/scripts/zowe_operations.sh
+          
