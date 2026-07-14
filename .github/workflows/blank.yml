@@ -8,8 +8,7 @@ jobs:
   cobol-check:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
       - name: Set up Java
         uses: actions/setup-java@v4
@@ -17,23 +16,11 @@ jobs:
           distribution: 'temurin'
           java-version: '11'
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '24'
-
-      - name: Install Zowe CLI
-        run: npm install -g @zowe/cli@latest
-
-      - name: Run Zowe Operations
-        # ITT VAN A LÉNYEG: Itt kötjük össze a GitHub Secrets-et a rendszerrel
+      - name: Run COBOL Check
         env:
           ZOWE_USERNAME: ${{ secrets.ZOWE_USERNAME }}
           ZOWE_PASSWORD: ${{ secrets.ZOWE_PASSWORD }}
-          ZOWE_HOST: ${{ secrets.YOUR_HOST }}
-          ZOWE_PORT: ${{ secrets.YOUR_PORT }}
         run: |
-          sudo apt-get update && sudo apt-get install -y dos2unix
-          dos2unix .github/scripts/zowe_operations.sh
+          echo "Running COBOL Check"
           chmod +x .github/scripts/zowe_operations.sh
-          bash -x .github/scripts/zowe_operations.sh
+          .github/scripts/zowe_operations.sh
