@@ -17,18 +17,26 @@ jobs:
           distribution: 'temurin'
           java-version: '11'
 
-      - name: Run COBOL Check
+      # 1. Telepítjük a Node.js-t (ez futtatja a Zowe-t)
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      # 2. Telepítjük a Zowe CLI-t az üres GitHub gépre
+      - name: Install Zowe CLI
+        run: npm install -g @zowe/cli@latest
+
+      # 3. Futtatjuk a te szkriptedet
+      - name: Run Zowe Operations
         env:
           ZOWE_USERNAME: ${{ secrets.ZOWE_USERNAME }}
           ZOWE_PASSWORD: ${{ secrets.ZOWE_PASSWORD }}
         run: |
-          echo "Running COBOL Check"
+          # Kijavítjuk a rejtett Windows sorvégeket, ha lennének
+          sudo apt-get update && sudo apt-get install -y dos2unix
+          dos2unix .github/scripts/zowe_operations.sh
           
-      - name: Setup Mainframe Environment and Upload COBOL Check
-        env:
-          ZOWE_USERNAME: ${{ secrets.ZOWE_USERNAME }}
-          ZOWE_PASSWORD: ${{ secrets.ZOWE_PASSWORD }}
-        run: |
-          bash .github/scripts/zowe_operations.sh
-#          chmod +x .github/scripts/zowe_operations.sh
-#          .github/scripts/zowe_operations.sh
+          # Futtatjuk a szkriptet részletes logolással (-x)
+          chmod +x .github/scripts/zowe_operations.sh
+          bash -x .github/scripts/zowe_operations.sh
