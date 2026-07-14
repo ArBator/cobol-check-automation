@@ -30,8 +30,8 @@ jobs:
         env:
           ZOWE_USERNAME: ${{ secrets.ZOWE_USERNAME }}
           ZOWE_PASSWORD: ${{ secrets.ZOWE_PASSWORD }}
-          ZOWE_HOST: ${{ secrets.ZOWE_HOST }}
-          ZOWE_PORT: ${{ secrets.ZOWE_PORT }}
+          ZOWE_HOST: ${{ secrets.YOUR_HOST }}
+          ZOWE_PORT: ${{ secrets.YOUR_PORT }}
         run: |
           sudo apt-get update && sudo apt-get install -y dos2unix
           dos2unix .github/scripts/zowe_operations.sh
